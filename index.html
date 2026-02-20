@@ -6,41 +6,48 @@
   <title>Что для меня самое важное?</title>
   <style>
     :root{
-      --bg:#0b1020;
-      --card:#121a33;
-      --card2:#0f1730;
-      --text:#eef2ff;
-      --muted:#b8c0ff;
-      --accent:#7c5cff;
-      --good:#2dd4bf;
-      --warn:#fbbf24;
-      --bad:#fb7185;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --card2:#fbfbfe;
+      --text:#111827;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --accent:#4f46e5;     /* индиго */
+      --accent2:#06b6d4;    /* циан */
+      --warn:#f59e0b;       /* янтарь */
+      --danger:#ef4444;     /* красный */
+      --shadow: 0 10px 24px rgba(17,24,39,.08);
+      --shadow2: 0 6px 16px rgba(17,24,39,.06);
       --radius: 18px;
+      --radius2: 16px;
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 800px at 20% 10%, rgba(124,92,255,.25), transparent 50%),
-                  radial-gradient(1000px 700px at 90% 20%, rgba(45,212,191,.18), transparent 55%),
-                  radial-gradient(900px 600px at 40% 100%, rgba(251,191,36,.12), transparent 55%),
-                  var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 600px at 15% 10%, rgba(79,70,229,.10), transparent 60%),
+        radial-gradient(900px 650px at 90% 20%, rgba(6,182,212,.10), transparent 60%),
+        radial-gradient(900px 650px at 35% 110%, rgba(245,158,11,.08), transparent 60%),
+        var(--bg);
       color: var(--text);
       min-height:100vh;
       display:flex;
       justify-content:center;
       padding: 18px;
     }
+
     .app{
       width: min(980px, 100%);
       display:grid;
       gap: 14px;
     }
+
     header{
-      background: rgba(18,26,51,.75);
+      background: rgba(255,255,255,.85);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,.08);
+      border: 1px solid var(--border);
       box-shadow: var(--shadow);
       border-radius: var(--radius);
       padding: 16px 16px;
@@ -49,35 +56,42 @@
       justify-content:space-between;
       gap: 12px;
     }
+
     .title{
       display:flex;
       flex-direction:column;
       gap:6px;
+      min-width: 260px;
     }
+
     h1{
       margin:0;
       font-size: clamp(20px, 3vw, 28px);
-      letter-spacing:.2px;
+      letter-spacing:-.2px;
     }
+
     .subtitle{
       margin:0;
       color: var(--muted);
-      line-height:1.35;
+      line-height:1.45;
       font-size: 14px;
     }
+
     .pillRow{
       display:flex; flex-wrap:wrap; gap:8px;
       margin-top:6px;
     }
+
     .pill{
       padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(124,92,255,.15);
-      border: 1px solid rgba(124,92,255,.35);
-      color: #e9e6ff;
+      background: rgba(79,70,229,.10);
+      border: 1px solid rgba(79,70,229,.18);
+      color: #1f2937;
       font-size: 12px;
       user-select:none;
     }
+
     .controls{
       display:flex;
       gap:10px;
@@ -85,29 +99,35 @@
       flex-wrap:wrap;
       justify-content:flex-end;
     }
+
     button{
       border:0;
       border-radius: 14px;
       padding: 11px 14px;
-      color: var(--text);
-      background: rgba(124,92,255,.85);
-      box-shadow: 0 10px 20px rgba(124,92,255,.25);
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 10px 20px rgba(79,70,229,.18);
       cursor:pointer;
-      font-weight: 700;
+      font-weight: 750;
       letter-spacing:.2px;
-      transition: transform .08s ease, filter .15s ease;
+      transition: transform .08s ease, filter .15s ease, box-shadow .15s ease;
     }
+    button:hover{filter: brightness(1.03)}
     button:active{transform: translateY(1px) scale(.99)}
+
     button.secondary{
-      background: rgba(255,255,255,.08);
-      box-shadow:none;
-      border: 1px solid rgba(255,255,255,.12);
-      font-weight: 650;
+      color: var(--text);
+      background: rgba(255,255,255,.90);
+      box-shadow: var(--shadow2);
+      border: 1px solid var(--border);
+      font-weight: 700;
     }
+
     button.danger{
-      background: rgba(251,113,133,.9);
-      box-shadow: 0 10px 20px rgba(251,113,133,.2);
+      background: var(--danger);
+      box-shadow: 0 10px 20px rgba(239,68,68,.16);
     }
+
     button:disabled{
       opacity:.45;
       cursor:not-allowed;
@@ -115,8 +135,8 @@
     }
 
     .panel{
-      background: rgba(18,26,51,.70);
-      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.85);
+      border: 1px solid var(--border);
       box-shadow: var(--shadow);
       border-radius: var(--radius);
       padding: 14px;
@@ -131,22 +151,27 @@
       align-items:center;
       justify-content:space-between;
     }
+
     .stepInfo{
       display:flex;
       flex-direction:column;
       gap:4px;
     }
+
     .stepTitle{
       margin:0;
       font-size: 16px;
-      font-weight: 800;
+      font-weight: 850;
+      letter-spacing:-.2px;
     }
+
     .stepHint{
       margin:0;
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.35;
+      line-height: 1.45;
     }
+
     .counter{
       display:flex;
       gap:10px;
@@ -154,18 +179,21 @@
       flex-wrap:wrap;
       justify-content:flex-end;
     }
-    .counter .badge{
+
+    .badge{
       padding: 8px 10px;
       border-radius: 12px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(17,24,39,.03);
+      border: 1px solid var(--border);
       font-size: 13px;
-      color: #e8ecff;
+      color: var(--text);
       user-select:none;
     }
-    .badge strong{color:#fff}
-    .badge.good{border-color: rgba(45,212,191,.35); background: rgba(45,212,191,.08)}
-    .badge.warn{border-color: rgba(251,191,36,.35); background: rgba(251,191,36,.08)}
+    .badge strong{color: var(--text)}
+    .badge.warn{
+      border-color: rgba(245,158,11,.35);
+      background: rgba(245,158,11,.10);
+    }
 
     .grid{
       display:grid;
@@ -180,66 +208,78 @@
     }
 
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(249,250,251,1));
+      border: 1px solid var(--border);
+      border-radius: var(--radius2);
       padding: 12px 12px 10px;
-      box-shadow: 0 6px 16px rgba(0,0,0,.22);
+      box-shadow: var(--shadow2);
       display:flex;
       flex-direction:column;
       gap: 8px;
       cursor:pointer;
       user-select:none;
-      transition: transform .08s ease, border-color .15s ease, background .15s ease, opacity .15s ease;
+      transition: transform .08s ease, border-color .15s ease, background .15s ease, opacity .15s ease, box-shadow .15s ease;
       position: relative;
       min-height: 92px;
     }
-    .card:hover{transform: translateY(-1px)}
-    .card.selected{
-      border-color: rgba(251,191,36,.55);
-      background: linear-gradient(180deg, rgba(251,191,36,.12), rgba(255,255,255,.02));
+    .card:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(17,24,39,.10);
     }
+
+    .card.selected{
+      border-color: rgba(245,158,11,.55);
+      background: linear-gradient(180deg, rgba(245,158,11,.12), rgba(255,255,255,1));
+    }
+
     .card.removed{
       opacity:.45;
       filter: grayscale(.2);
       cursor: default;
     }
+
     .topRow{
       display:flex; align-items:center; justify-content:space-between; gap:8px;
     }
+
     .emoji{
       font-size: 26px;
       line-height:1;
     }
+
     .name{
       font-size: 15px;
       font-weight: 850;
       margin:0;
+      letter-spacing:-.15px;
     }
+
     .mini{
       margin:0;
       color: var(--muted);
       font-size: 12px;
-      line-height: 1.25;
+      line-height: 1.35;
     }
+
     .tag{
       font-size: 11px;
       padding: 5px 8px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      color: #e8ecff;
+      border: 1px solid var(--border);
+      background: rgba(17,24,39,.03);
+      color: #111827;
       white-space:nowrap;
     }
     .tag.removed{
-      border-color: rgba(251,113,133,.35);
-      background: rgba(251,113,133,.10);
+      border-color: rgba(239,68,68,.28);
+      background: rgba(239,68,68,.10);
+      color: #7f1d1d;
     }
 
     .footerNote{
       color: var(--muted);
       font-size: 12px;
-      line-height:1.4;
+      line-height:1.5;
       margin: 0;
       padding-top: 2px;
     }
@@ -249,15 +289,17 @@
       gap: 12px;
     }
     .result.show{display:grid;}
+
     .resultCard{
-      background: rgba(124,92,255,.14);
-      border: 1px solid rgba(124,92,255,.35);
+      background: rgba(255,255,255,.90);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 14px;
       box-shadow: var(--shadow);
       display:grid;
       gap: 10px;
     }
+
     .resultTop{
       display:flex;
       align-items:center;
@@ -265,6 +307,7 @@
       gap: 12px;
       flex-wrap:wrap;
     }
+
     .big{
       display:flex;
       gap: 10px;
@@ -274,16 +317,19 @@
     .big h2{
       margin:0;
       font-size: 20px;
+      letter-spacing:-.2px;
     }
+
     .meaning{
       margin:0;
-      color:#eef2ff;
-      line-height:1.45;
+      color:#111827;
+      line-height:1.55;
       font-size: 14px;
     }
+
     .questions{
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(17,24,39,.03);
+      border: 1px solid var(--border);
       border-radius: 16px;
       padding: 12px;
       display:grid;
@@ -292,23 +338,24 @@
     .questions h3{
       margin:0;
       font-size: 14px;
-      letter-spacing:.2px;
+      letter-spacing:-.1px;
     }
     .questions ul{
       margin:0;
       padding-left: 18px;
       color: var(--muted);
-      line-height:1.5;
+      line-height:1.6;
       font-size: 13px;
     }
+
     .ok{
-      color:#dffdf8;
-      background: rgba(45,212,191,.10);
-      border: 1px solid rgba(45,212,191,.30);
+      color:#0f172a;
+      background: rgba(6,182,212,.10);
+      border: 1px solid rgba(6,182,212,.25);
       padding: 10px 12px;
       border-radius: 16px;
       font-size: 13px;
-      line-height:1.45;
+      line-height:1.55;
     }
 
     .srOnly{
@@ -324,13 +371,13 @@
       <div class="title">
         <h1>Игра: «Что для меня самое важное?»</h1>
         <p class="subtitle">
-          Нажимай на карточки, чтобы <b>вычёркивать</b> их. Убираем по шагам: <b>3 → 3 → 3 → 2</b>.
-          В конце останется одно самое важное — и мы объясним, что это значит.
+          Нажимай на карточки, чтобы <b>вычёркивать</b> их.
+          Убираем по шагам: <b>3 → 3 → 3 → 2</b>. В конце останется одно самое важное.
         </p>
         <div class="pillRow" aria-hidden="true">
-          <div class="pill">Для детей</div>
-          <div class="pill">Быстро</div>
+          <div class="pill">Светлый дизайн</div>
           <div class="pill">Без «правильно/неправильно»</div>
+          <div class="pill">Можно обсуждать в классе</div>
         </div>
       </div>
       <div class="controls">
@@ -348,14 +395,14 @@
         <div class="counter">
           <div class="badge warn" id="needBadge">Нужно выбрать: <strong id="needCount">3</strong></div>
           <div class="badge" id="leftBadge">Осталось категорий: <strong id="leftCount">12</strong></div>
-          <button id="confirmBtn" type="button" disabled>✅ Подтвердить выбор</button>
+          <button id="confirmBtn" type="button" disabled>✅ Подтвердить</button>
         </div>
       </div>
 
       <div class="grid" id="grid" role="list" aria-label="Категории жизни"></div>
 
       <p class="footerNote">
-        Подсказка: здесь нет правильных ответов. Выбор у каждого свой — и это нормально.
+        Подсказка: твой выбор — это про тебя. У другого человека может быть иначе, и это нормально.
       </p>
     </section>
 
@@ -378,7 +425,7 @@
         <p class="meaning" id="resultMeaning"></p>
 
         <div class="questions">
-          <h3>Вопросы для размышления (можно обсудить с взрослым):</h3>
+          <h3>Вопросы для размышления:</h3>
           <ul>
             <li>Почему именно это осталось?</li>
             <li>Как я могу заботиться об этом в жизни?</li>
@@ -388,20 +435,24 @@
         </div>
 
         <div class="ok">
-          ✨ Важно: у каждого человека может остаться разное — семья, здоровье, друзья, учёба, любовь или что-то ещё.
-          И это нормально. Главное — понять себя и уважать выбор других.
+          ✨ Важно: у каждого человека может остаться разное — семья, друзья, учёба, мечты и цели и т.д.
+          И это нормально. Главное — лучше понять себя и уважать выбор других.
         </div>
       </div>
     </section>
   </div>
 
   <script>
+    // Категории (ЗДОРОВЬЕ ЗАМЕНЕНО на "Домашние питомцы")
     const DEFAULT_CATEGORIES = [
       { id:"family", name:"Семья", emoji:"👨‍👩‍👧‍👦", desc:"Люди, которые рядом и поддерживают." },
       { id:"love", name:"Любимый человек", emoji:"❤️", desc:"Близкие отношения и чувство любви." },
       { id:"friends", name:"Друзья", emoji:"👫", desc:"Дружба, общение, поддержка." },
       { id:"classmates", name:"Одногруппники / одноклассники", emoji:"🎓", desc:"Учёба и люди из школы/колледжа." },
-      { id:"health", name:"Здоровье", emoji:"🩺", desc:"Самочувствие, сон, энергия, забота о себе." },
+
+      // Было: health / "Здоровье" 🩺
+      { id:"pets", name:"Домашние питомцы", emoji:"🐶", desc:"Забота о животных и радость от общения с ними." },
+
       { id:"hobbies", name:"Хобби", emoji:"🎨", desc:"То, что радует и вдохновляет." },
       { id:"study", name:"Учёба", emoji:"📚", desc:"Знания и развитие навыков." },
       { id:"games", name:"Игры и развлечения", emoji:"🎮", desc:"Отдых, веселье, приятные эмоции." },
@@ -411,20 +462,20 @@
       { id:"dreams", name:"Мечты и цели", emoji:"⭐", desc:"То, к чему хочется идти." }
     ];
 
-    // Пояснения для финала (коротко и по-детски)
+    // Пояснения к финалу
     const MEANINGS = {
       family: "Если у тебя осталось <b>«Семья»</b>, значит для тебя очень важны близкие люди, забота, поддержка и ощущение «я не один».",
       love: "Если у тебя осталось <b>«Любимый человек»</b>, значит для тебя важно быть рядом с тем, кого ты любишь, и чувствовать тепло и близость.",
-      friends: "Если у тебя осталось <b>«Друзья»</b>, значит тебе важно общение, верность, доверие и весёлое (и честное) «мы вместе».",
-      classmates: "Если у тебя осталось <b>«Одногруппники/одноклассники»</b>, значит для тебя важно быть частью команды, учиться вместе и чувствовать себя «своим».",
-      health: "Если у тебя осталось <b>«Здоровье»</b>, значит для тебя важно хорошо себя чувствовать, иметь силы и заботиться о своём теле и настроении.",
+      friends: "Если у тебя осталось <b>«Друзья»</b>, значит тебе важны общение, доверие и чувство «мы вместе».",
+      classmates: "Если у тебя осталось <b>«Одногруппники/одноклассники»</b>, значит для тебя важно быть частью команды и чувствовать себя «своим» среди сверстников.",
+      pets: "Если у тебя осталось <b>«Домашние питомцы»</b>, значит для тебя очень важны забота, доброта и чувство, что тебя ждут и ты нужен(на).",
       hobbies: "Если у тебя осталось <b>«Хобби»</b>, значит тебе важно творчество и то, что делает тебя счастливее и помогает выражать себя.",
       study: "Если у тебя осталось <b>«Учёба»</b>, значит тебе важны знания, рост и умение становиться сильнее в том, что ты делаешь.",
-      games: "Если у тебя осталось <b>«Игры и развлечения»</b>, значит тебе важно отдыхать, получать радость и не забывать про весёлую часть жизни.",
+      games: "Если у тебя осталось <b>«Игры и развлечения»</b>, значит тебе важно отдыхать, получать радость и находить время для весёлой части жизни.",
       phone: "Если у тебя осталось <b>«Мобильный телефон»</b>, значит для тебя важны удобство, связь и возможность быстро получать информацию.",
       social: "Если у тебя осталось <b>«Социальные сети»</b>, значит тебе важно быть на связи, узнавать новости и чувствовать себя частью онлайн-мира.",
       money: "Если у тебя осталось <b>«Деньги»</b>, значит для тебя важны возможности, уверенность и чувство, что ты можешь многое себе позволить.",
-      dreams: "Если у тебя осталось <b>«Мечты и цели»</b>, значит для тебя важно идти вперёд, верить в себя и двигаться к тому, что хочется."
+      dreams: "Если у тебя осталось <b>«Мечты и цели»</b>, значит тебе важно идти вперёд, верить в себя и двигаться к тому, что хочется."
     };
 
     const STEPS = [
@@ -488,8 +539,6 @@
 
       const need = step.remove - selectedIds.size;
       confirmBtn.disabled = need !== 0;
-
-      // Мелкая «подсказка» через aria
       confirmBtn.setAttribute("aria-disabled", String(confirmBtn.disabled));
     }
 
@@ -526,8 +575,7 @@
           if(selectedIds.has(cat.id)){
             selectedIds.delete(cat.id);
           }else{
-            // нельзя выбрать больше, чем нужно на шаге
-            if(selectedIds.size >= step.remove) return;
+            if(selectedIds.size >= step.remove) return; // не больше, чем нужно
             selectedIds.add(cat.id);
           }
           render();
@@ -551,11 +599,9 @@
       const step = currentStep();
       if(selectedIds.size !== step.remove) return;
 
-      // отмечаем выбранные как removed
       categories = categories.map(c => selectedIds.has(c.id) ? ({...c, removed:true}) : c);
       selectedIds.clear();
 
-      // если дошли до результата
       if(remaining().length === 1){
         showResult(remaining()[0]);
         return;
@@ -573,7 +619,6 @@
       resultTitle.textContent = `Самое важное для тебя сейчас: ${finalCat.name}`;
       resultMeaning.innerHTML = MEANINGS[finalCat.id] || "Это твой главный приоритет на данный момент.";
 
-      // на случай, если кто-то захотел распечатать / сохранить
       document.title = `Самое важное: ${finalCat.name}`;
     }
 
@@ -592,7 +637,6 @@
     }
 
     function shuffleGame(){
-      // перемешиваем только порядок, оставляя removed/step
       categories = shuffleArray(categories);
       render();
     }
@@ -602,12 +646,8 @@
     shuffleBtn.addEventListener("click", shuffleGame);
 
     playAgainBtn.addEventListener("click", resetGame);
-    backBtn.addEventListener("click", ()=>{
-      // вернёмся, но результат не сбрасываем — можно посмотреть карточки
-      backToGame();
-    });
+    backBtn.addEventListener("click", backToGame);
 
-    // старт
     resetGame();
   </script>
 </body>
