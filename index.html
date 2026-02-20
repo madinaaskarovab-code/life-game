@@ -314,11 +314,15 @@
       align-items:center;
     }
     .big .emoji{font-size: 40px}
-    .big h2{
-      margin:0;
-      font-size: 20px;
-      letter-spacing:-.2px;
-    }
+   .big h2{
+  margin:0;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #4f46e5;
+  text-align: center;
+}
 
     .meaning{
       margin:0;
@@ -363,6 +367,18 @@
       left:-9999px;
       width:1px;height:1px;overflow:hidden;
     }
+.final-highlight {
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px rgba(79,70,229,0.3);
+  }
+  to {
+    text-shadow: 0 0 25px rgba(79,70,229,0.7);
+  }
+}
   </style>
 </head>
 <body>
@@ -612,15 +628,22 @@
     }
 
     function showResult(finalCat){
-      gamePanel.style.display = "none";
-      resultPanel.classList.add("show");
+  gamePanel.style.display = "none";
+  resultPanel.classList.add("show");
 
-      resultEmoji.textContent = finalCat.emoji;
-      resultTitle.textContent = `Самое важное для тебя сейчас: ${finalCat.name}`;
-      resultMeaning.innerHTML = MEANINGS[finalCat.id] || "Это твой главный приоритет на данный момент.";
+  resultEmoji.textContent = finalCat.emoji;
 
-      document.title = `Самое важное: ${finalCat.name}`;
-    }
+  resultTitle.innerHTML = `
+    <span class="final-highlight">
+      ${finalCat.name}
+    </span>
+  `;
+
+  resultMeaning.innerHTML = MEANINGS[finalCat.id] || 
+    "Это твой главный приоритет на данный момент.";
+
+  document.title = `Самое важное: ${finalCat.name}`;
+}
 
     function backToGame(){
       resultPanel.classList.remove("show");
