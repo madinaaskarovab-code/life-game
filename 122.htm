@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Что для меня самое важное?</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#121a33;
+      --card2:#0f1730;
+      --text:#eef2ff;
+      --muted:#b8c0ff;
+      --accent:#7c5cff;
+      --good:#2dd4bf;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(124,92,255,.25), transparent 50%),
+                  radial-gradient(1000px 700px at 90% 20%, rgba(45,212,191,.18), transparent 55%),
+                  radial-gradient(900px 600px at 40% 100%, rgba(251,191,36,.12), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      padding: 18px;
+    }
+    .app{
+      width: min(980px, 100%);
+      display:grid;
+      gap: 14px;
+    }
+    header{
+      background: rgba(18,26,51,.75);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 16px 16px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    h1{
+      margin:0;
+      font-size: clamp(20px, 3vw, 28px);
+      letter-spacing:.2px;
+    }
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      line-height:1.35;
+      font-size: 14px;
+    }
+    .pillRow{
+      display:flex; flex-wrap:wrap; gap:8px;
+      margin-top:6px;
+    }
+    .pill{
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(124,92,255,.15);
+      border: 1px solid rgba(124,92,255,.35);
+      color: #e9e6ff;
+      font-size: 12px;
+      user-select:none;
+    }
+    .controls{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    button{
+      border:0;
+      border-radius: 14px;
+      padding: 11px 14px;
+      color: var(--text);
+      background: rgba(124,92,255,.85);
+      box-shadow: 0 10px 20px rgba(124,92,255,.25);
+      cursor:pointer;
+      font-weight: 700;
+      letter-spacing:.2px;
+      transition: transform .08s ease, filter .15s ease;
+    }
+    button:active{transform: translateY(1px) scale(.99)}
+    button.secondary{
+      background: rgba(255,255,255,.08);
+      box-shadow:none;
+      border: 1px solid rgba(255,255,255,.12);
+      font-weight: 650;
+    }
+    button.danger{
+      background: rgba(251,113,133,.9);
+      box-shadow: 0 10px 20px rgba(251,113,133,.2);
+    }
+    button:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      filter:saturate(.8);
+    }
+
+    .panel{
+      background: rgba(18,26,51,.70);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 14px;
+      display:grid;
+      gap: 12px;
+    }
+
+    .stepBox{
+      display:flex;
+      gap: 12px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .stepInfo{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .stepTitle{
+      margin:0;
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .stepHint{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    .counter{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .counter .badge{
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      font-size: 13px;
+      color: #e8ecff;
+      user-select:none;
+    }
+    .badge strong{color:#fff}
+    .badge.good{border-color: rgba(45,212,191,.35); background: rgba(45,212,191,.08)}
+    .badge.warn{border-color: rgba(251,191,36,.35); background: rgba(251,191,36,.08)}
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 720px){
+      .grid{grid-template-columns: repeat(2, 1fr);}
+    }
+    @media (max-width: 420px){
+      .grid{grid-template-columns: 1fr;}
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      padding: 12px 12px 10px;
+      box-shadow: 0 6px 16px rgba(0,0,0,.22);
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .08s ease, border-color .15s ease, background .15s ease, opacity .15s ease;
+      position: relative;
+      min-height: 92px;
+    }
+    .card:hover{transform: translateY(-1px)}
+    .card.selected{
+      border-color: rgba(251,191,36,.55);
+      background: linear-gradient(180deg, rgba(251,191,36,.12), rgba(255,255,255,.02));
+    }
+    .card.removed{
+      opacity:.45;
+      filter: grayscale(.2);
+      cursor: default;
+    }
+    .topRow{
+      display:flex; align-items:center; justify-content:space-between; gap:8px;
+    }
+    .emoji{
+      font-size: 26px;
+      line-height:1;
+    }
+    .name{
+      font-size: 15px;
+      font-weight: 850;
+      margin:0;
+    }
+    .mini{
+      margin:0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.25;
+    }
+    .tag{
+      font-size: 11px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: #e8ecff;
+      white-space:nowrap;
+    }
+    .tag.removed{
+      border-color: rgba(251,113,133,.35);
+      background: rgba(251,113,133,.10);
+    }
+
+    .footerNote{
+      color: var(--muted);
+      font-size: 12px;
+      line-height:1.4;
+      margin: 0;
+      padding-top: 2px;
+    }
+
+    .result{
+      display:none;
+      gap: 12px;
+    }
+    .result.show{display:grid;}
+    .resultCard{
+      background: rgba(124,92,255,.14);
+      border: 1px solid rgba(124,92,255,.35);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: var(--shadow);
+      display:grid;
+      gap: 10px;
+    }
+    .resultTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+    }
+    .big{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+    }
+    .big .emoji{font-size: 40px}
+    .big h2{
+      margin:0;
+      font-size: 20px;
+    }
+    .meaning{
+      margin:0;
+      color:#eef2ff;
+      line-height:1.45;
+      font-size: 14px;
+    }
+    .questions{
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      padding: 12px;
+      display:grid;
+      gap: 8px;
+    }
+    .questions h3{
+      margin:0;
+      font-size: 14px;
+      letter-spacing:.2px;
+    }
+    .questions ul{
+      margin:0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height:1.5;
+      font-size: 13px;
+    }
+    .ok{
+      color:#dffdf8;
+      background: rgba(45,212,191,.10);
+      border: 1px solid rgba(45,212,191,.30);
+      padding: 10px 12px;
+      border-radius: 16px;
+      font-size: 13px;
+      line-height:1.45;
+    }
+
+    .srOnly{
+      position:absolute;
+      left:-9999px;
+      width:1px;height:1px;overflow:hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="app" id="app">
+    <header>
+      <div class="title">
+        <h1>Игра: «Что для меня самое важное?»</h1>
+        <p class="subtitle">
+          Нажимай на карточки, чтобы <b>вычёркивать</b> их. Убираем по шагам: <b>3 → 3 → 3 → 2</b>.
+          В конце останется одно самое важное — и мы объясним, что это значит.
+        </p>
+        <div class="pillRow" aria-hidden="true">
+          <div class="pill">Для детей</div>
+          <div class="pill">Быстро</div>
+          <div class="pill">Без «правильно/неправильно»</div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="secondary" id="shuffleBtn" type="button">🔀 Перемешать</button>
+        <button class="secondary" id="resetBtn" type="button">↩️ Сначала</button>
+      </div>
+    </header>
+
+    <section class="panel" id="gamePanel">
+      <div class="stepBox">
+        <div class="stepInfo">
+          <p class="stepTitle" id="stepTitle">Шаг 1</p>
+          <p class="stepHint" id="stepHint">Выбери <b>3</b> категории, от которых ты готов отказаться (на время).</p>
+        </div>
+        <div class="counter">
+          <div class="badge warn" id="needBadge">Нужно выбрать: <strong id="needCount">3</strong></div>
+          <div class="badge" id="leftBadge">Осталось категорий: <strong id="leftCount">12</strong></div>
+          <button id="confirmBtn" type="button" disabled>✅ Подтвердить выбор</button>
+        </div>
+      </div>
+
+      <div class="grid" id="grid" role="list" aria-label="Категории жизни"></div>
+
+      <p class="footerNote">
+        Подсказка: здесь нет правильных ответов. Выбор у каждого свой — и это нормально.
+      </p>
+    </section>
+
+    <section class="result" id="resultPanel">
+      <div class="resultCard">
+        <div class="resultTop">
+          <div class="big">
+            <div class="emoji" id="resultEmoji">⭐</div>
+            <div>
+              <h2 id="resultTitle">Твоё самое важное</h2>
+              <p class="mini" id="resultSub">Осталась одна категория — это твой главный приоритет сейчас.</p>
+            </div>
+          </div>
+          <div class="controls">
+            <button class="secondary" id="backBtn" type="button">⬅️ Вернуться</button>
+            <button id="playAgainBtn" type="button">🔁 Сыграть ещё раз</button>
+          </div>
+        </div>
+
+        <p class="meaning" id="resultMeaning"></p>
+
+        <div class="questions">
+          <h3>Вопросы для размышления (можно обсудить с взрослым):</h3>
+          <ul>
+            <li>Почему именно это осталось?</li>
+            <li>Как я могу заботиться об этом в жизни?</li>
+            <li>Что мне помогает, а что мешает?</li>
+            <li>Хочу ли я, чтобы это было главным и через год?</li>
+          </ul>
+        </div>
+
+        <div class="ok">
+          ✨ Важно: у каждого человека может остаться разное — семья, здоровье, друзья, учёба, любовь или что-то ещё.
+          И это нормально. Главное — понять себя и уважать выбор других.
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const DEFAULT_CATEGORIES = [
+      { id:"family", name:"Семья", emoji:"👨‍👩‍👧‍👦", desc:"Люди, которые рядом и поддерживают." },
+      { id:"love", name:"Любимый человек", emoji:"❤️", desc:"Близкие отношения и чувство любви." },
+      { id:"friends", name:"Друзья", emoji:"👫", desc:"Дружба, общение, поддержка." },
+      { id:"classmates", name:"Одногруппники / одноклассники", emoji:"🎓", desc:"Учёба и люди из школы/колледжа." },
+      { id:"health", name:"Здоровье", emoji:"🩺", desc:"Самочувствие, сон, энергия, забота о себе." },
+      { id:"hobbies", name:"Хобби", emoji:"🎨", desc:"То, что радует и вдохновляет." },
+      { id:"study", name:"Учёба", emoji:"📚", desc:"Знания и развитие навыков." },
+      { id:"games", name:"Игры и развлечения", emoji:"🎮", desc:"Отдых, веселье, приятные эмоции." },
+      { id:"phone", name:"Мобильный телефон", emoji:"📱", desc:"Гаджеты и удобство связи." },
+      { id:"social", name:"Социальные сети", emoji:"🌐", desc:"Лента, видео, общение онлайн." },
+      { id:"money", name:"Деньги", emoji:"💰", desc:"Покупки, безопасность, возможности." },
+      { id:"dreams", name:"Мечты и цели", emoji:"⭐", desc:"То, к чему хочется идти." }
+    ];
+
+    // Пояснения для финала (коротко и по-детски)
+    const MEANINGS = {
+      family: "Если у тебя осталось <b>«Семья»</b>, значит для тебя очень важны близкие люди, забота, поддержка и ощущение «я не один».",
+      love: "Если у тебя осталось <b>«Любимый человек»</b>, значит для тебя важно быть рядом с тем, кого ты любишь, и чувствовать тепло и близость.",
+      friends: "Если у тебя осталось <b>«Друзья»</b>, значит тебе важно общение, верность, доверие и весёлое (и честное) «мы вместе».",
+      classmates: "Если у тебя осталось <b>«Одногруппники/одноклассники»</b>, значит для тебя важно быть частью команды, учиться вместе и чувствовать себя «своим».",
+      health: "Если у тебя осталось <b>«Здоровье»</b>, значит для тебя важно хорошо себя чувствовать, иметь силы и заботиться о своём теле и настроении.",
+      hobbies: "Если у тебя осталось <b>«Хобби»</b>, значит тебе важно творчество и то, что делает тебя счастливее и помогает выражать себя.",
+      study: "Если у тебя осталось <b>«Учёба»</b>, значит тебе важны знания, рост и умение становиться сильнее в том, что ты делаешь.",
+      games: "Если у тебя осталось <b>«Игры и развлечения»</b>, значит тебе важно отдыхать, получать радость и не забывать про весёлую часть жизни.",
+      phone: "Если у тебя осталось <b>«Мобильный телефон»</b>, значит для тебя важны удобство, связь и возможность быстро получать информацию.",
+      social: "Если у тебя осталось <b>«Социальные сети»</b>, значит тебе важно быть на связи, узнавать новости и чувствовать себя частью онлайн-мира.",
+      money: "Если у тебя осталось <b>«Деньги»</b>, значит для тебя важны возможности, уверенность и чувство, что ты можешь многое себе позволить.",
+      dreams: "Если у тебя осталось <b>«Мечты и цели»</b>, значит для тебя важно идти вперёд, верить в себя и двигаться к тому, что хочется."
+    };
+
+    const STEPS = [
+      { remove: 3, label: "Шаг 1", hint: "Выбери <b>3</b> категории, от которых ты готов отказаться (на время)." },
+      { remove: 3, label: "Шаг 2", hint: "Теперь ещё раз: выбери <b>3</b> категории, которые можно убрать." },
+      { remove: 3, label: "Шаг 3", hint: "Ещё сложнее: выбери <b>3</b> категории, от которых ты откажешься." },
+      { remove: 2, label: "Шаг 4", hint: "Финальный выбор: убери <b>2</b> категории. Останется самое важное." }
+    ];
+
+    const grid = document.getElementById("grid");
+    const confirmBtn = document.getElementById("confirmBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const shuffleBtn = document.getElementById("shuffleBtn");
+
+    const stepTitle = document.getElementById("stepTitle");
+    const stepHint  = document.getElementById("stepHint");
+    const needCount = document.getElementById("needCount");
+    const leftCount = document.getElementById("leftCount");
+
+    const gamePanel   = document.getElementById("gamePanel");
+    const resultPanel = document.getElementById("resultPanel");
+
+    const resultEmoji  = document.getElementById("resultEmoji");
+    const resultTitle  = document.getElementById("resultTitle");
+    const resultMeaning= document.getElementById("resultMeaning");
+
+    const playAgainBtn = document.getElementById("playAgainBtn");
+    const backBtn      = document.getElementById("backBtn");
+
+    let categories = [];
+    let stepIndex = 0;
+    let selectedIds = new Set();
+
+    function cloneDefault(){
+      return DEFAULT_CATEGORIES.map(x => ({...x, removed:false}));
+    }
+
+    function shuffleArray(arr){
+      const a = [...arr];
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function currentStep(){
+      return STEPS[stepIndex];
+    }
+
+    function remaining(){
+      return categories.filter(c => !c.removed);
+    }
+
+    function updateHeader(){
+      const step = currentStep();
+      stepTitle.textContent = step.label;
+      stepHint.innerHTML = step.hint;
+      needCount.textContent = step.remove - selectedIds.size;
+      leftCount.textContent = remaining().length;
+
+      const need = step.remove - selectedIds.size;
+      confirmBtn.disabled = need !== 0;
+
+      // Мелкая «подсказка» через aria
+      confirmBtn.setAttribute("aria-disabled", String(confirmBtn.disabled));
+    }
+
+    function render(){
+      grid.innerHTML = "";
+      const step = currentStep();
+
+      categories.forEach(cat => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.setAttribute("role","listitem");
+        card.setAttribute("tabindex", cat.removed ? "-1" : "0");
+        card.dataset.id = cat.id;
+
+        if(cat.removed) card.classList.add("removed");
+        if(selectedIds.has(cat.id)) card.classList.add("selected");
+
+        card.innerHTML = `
+          <div class="topRow">
+            <div class="emoji">${cat.emoji}</div>
+            <div class="tag ${cat.removed ? "removed" : ""}">
+              ${cat.removed ? "вычеркнуто" : (selectedIds.has(cat.id) ? "выбрано" : "нажми")}
+            </div>
+          </div>
+          <p class="name">${cat.name}</p>
+          <p class="mini">${cat.desc}</p>
+          <span class="srOnly">Категория: ${cat.name}</span>
+        `;
+
+        const canSelect = !cat.removed;
+        const toggle = () => {
+          if(!canSelect) return;
+
+          if(selectedIds.has(cat.id)){
+            selectedIds.delete(cat.id);
+          }else{
+            // нельзя выбрать больше, чем нужно на шаге
+            if(selectedIds.size >= step.remove) return;
+            selectedIds.add(cat.id);
+          }
+          render();
+        };
+
+        card.addEventListener("click", toggle);
+        card.addEventListener("keydown", (e)=>{
+          if(e.key === "Enter" || e.key === " "){
+            e.preventDefault();
+            toggle();
+          }
+        });
+
+        grid.appendChild(card);
+      });
+
+      updateHeader();
+    }
+
+    function confirmStep(){
+      const step = currentStep();
+      if(selectedIds.size !== step.remove) return;
+
+      // отмечаем выбранные как removed
+      categories = categories.map(c => selectedIds.has(c.id) ? ({...c, removed:true}) : c);
+      selectedIds.clear();
+
+      // если дошли до результата
+      if(remaining().length === 1){
+        showResult(remaining()[0]);
+        return;
+      }
+
+      stepIndex = Math.min(stepIndex + 1, STEPS.length - 1);
+      render();
+    }
+
+    function showResult(finalCat){
+      gamePanel.style.display = "none";
+      resultPanel.classList.add("show");
+
+      resultEmoji.textContent = finalCat.emoji;
+      resultTitle.textContent = `Самое важное для тебя сейчас: ${finalCat.name}`;
+      resultMeaning.innerHTML = MEANINGS[finalCat.id] || "Это твой главный приоритет на данный момент.";
+
+      // на случай, если кто-то захотел распечатать / сохранить
+      document.title = `Самое важное: ${finalCat.name}`;
+    }
+
+    function backToGame(){
+      resultPanel.classList.remove("show");
+      gamePanel.style.display = "";
+      document.title = "Что для меня самое важное?";
+    }
+
+    function resetGame(){
+      categories = cloneDefault();
+      stepIndex = 0;
+      selectedIds.clear();
+      backToGame();
+      render();
+    }
+
+    function shuffleGame(){
+      // перемешиваем только порядок, оставляя removed/step
+      categories = shuffleArray(categories);
+      render();
+    }
+
+    confirmBtn.addEventListener("click", confirmStep);
+    resetBtn.addEventListener("click", resetGame);
+    shuffleBtn.addEventListener("click", shuffleGame);
+
+    playAgainBtn.addEventListener("click", resetGame);
+    backBtn.addEventListener("click", ()=>{
+      // вернёмся, но результат не сбрасываем — можно посмотреть карточки
+      backToGame();
+    });
+
+    // старт
+    resetGame();
+  </script>
+</body>
+</html>
